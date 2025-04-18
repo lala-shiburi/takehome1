@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CurrentWeatherDisplay } from "./components/custom/CurrentWeatherDisplay";
 import { ForecastDaySelector } from "./components/custom/ForecastDaySelector";
 import { SearchBar } from "./components/custom/SearchBar";
@@ -12,11 +12,13 @@ import {
 import mock from "./api/mock.json";
 import { formatWeatherData } from "./lib/utils";
 import { FormattedWeatherDay } from "./types/weather";
+import { useCurrentWeather } from "./hooks/useCurrentWeather";
+import { SkeletonWeatherCard } from "./components/custom/SkeletonWeatherCard";
 
 export const App = () => {
   const formattedData = formatWeatherData(mock);
   const today = formattedData[3];
-
+  const { data, isLoading, isError, error } = useCurrentWeather("pretoria");
   const [location, setLocation] = useState("Pretoria, Gauteng, South Africa");
   const [currentWeather, setCurrentWeather] =
     useState<FormattedWeatherDay>(today);
@@ -40,26 +42,45 @@ export const App = () => {
     setCurrentWeather(day);
     setDisplayKey(Date.now());
   };
-
-  return (
+  useEffect(() => {
+    setLocation("Pretoria, Gauteng, South Africa");
+  }, [location]);
+  console.log(isLoading, isError, error);
+  return isLoading ? (
+    <SkeletonWeatherCard />
+  ) : (
     <div className="flex p-6 h-screen w-screen items-center justify-center">
       <Card className="w-full max-w-[500px] shadow-lg">
-        <CardHeader>
-          <SearchBar onReset={handleReset} onSearch={handleSearch} />
-          <CardTitle className="text-center text-sm font-bold pt-4">
-            {location}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-          <CurrentWeatherDisplay weather={currentWeather} key={displayKey} />
-        </CardContent>
-        <CardFooter>
-          <ForecastDaySelector
-            forecast={forecastDays}
-            selectedDay={currentWeather}
-            onSelectDay={handleDaySelect}
-          />
-        </CardFooter>
+        {isError ? (
+          <div className="p-6 text-center text-red-500 font-medium">
+            <p>Something went wrong:</p>
+            <p className="text-sm mt-2">
+              {(error as Error)?.message || "Unknown error"}
+            </p>
+          </div>
+        ) : (
+          <>
+            <CardHeader>
+              <SearchBar onReset={handleReset} onSearch={handleSearch} />
+              <CardTitle className="text-center text-sm font-bold pt-4">
+                {location}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
+              <CurrentWeatherDisplay
+                weather={currentWeather}
+                key={displayKey}
+              />
+            </CardContent>
+            <CardFooter>
+              <ForecastDaySelector
+                forecast={forecastDays}
+                selectedDay={currentWeather}
+                onSelectDay={handleDaySelect}
+              />
+            </CardFooter>
+          </>
+        )}
       </Card>
     </div>
   );
