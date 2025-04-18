@@ -1,54 +1,97 @@
-# React + TypeScript + Vite
+# ☀️ Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple, responsive weather application built with React, TailwindCSS, and custom weather data formatting. Easily search for a location, view current weather, and explore forecasts over several days.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Getting Started
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js (v18+ recommended)
+- pnpm (or npm/yarn)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Setup Instructions
+
+```bash
+# Clone the repository
+git clone https://github.com/lala-shiburi/takehome1.git
+cd weather-app
+
+# Install dependencies
+pnpm install
+
+# Start the development server
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Visit `http://localhost:5173` to view the app.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+## 🧠 Features
+
+- 🔍 Location search bar
+- 🌡️ Current weather display
+- 📅 Forecast selection for previous and upcoming days
+- 💨 Weather attributes: temperature, wind, pressure, precipitation, and conditions
+- 🧪 Mock data support for development and testing
+- 🎨 Styled with TailwindCSS
+- ⚡️ Fast performance with Vite
+
+---
+
+## 🛠️ Tech Stack
+
+- **React** – Functional components & hooks
+- **TypeScript** – Type safety throughout
+- **Tailwind CSS** – Utility-first styling
+- **Vitest** – Unit testing framework
+- **clsx + tailwind-merge** – Clean className management
+- **moment.js** – Date handling
+- **Custom hooks** – Reusable logic for fetching and transforming weather data
+
+---
+
+## 📐 Design Decisions & Trade-offs
+
+### Component Structure
+
+Each UI responsibility is isolated into a self-contained component (`SearchBar`, `CurrentWeatherDisplay`, etc.) to maintain readability and reusability.
+
+### Data Handling
+
+Weather data is normalized through a `formatWeatherData` utility to keep components free of raw API structures and parsing logic.
+
+### Mock Data Support
+
+To speed up development and avoid rate-limiting or network issues, mock weather data can be generated programmatically. You will also see
+that there is mock data being used because weatherstack free tier doesn't support forecast or historical data so that's why it's being used there.
+
+### Minimal Dependencies
+
+No global state management is used as the app's scope is local and self-contained. I couldn't justify using anything more robust
+
+---
+
+## 🧪 Running Tests
+
+```bash
+pnpm test
 ```
+
+Includes tests for:
+
+- unit tests for components
+- Loading state
+- Error handling
+- Weather data rendering
+- User interaction (search, select day)
+
+---
+
+## 📄 License
+
+MIT
+
+---
