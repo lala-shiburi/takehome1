@@ -1,17 +1,30 @@
-export const CurrentWeatherDisplay = () => {
+import { CurrentWeather } from "../../types/weather";
+
+type CurrentWeatherDisplayProps = {
+  weather: CurrentWeather;
+};
+
+export const CurrentWeatherDisplay = ({
+  weather,
+}: CurrentWeatherDisplayProps) => {
   return (
     <div>
-      <div className="flex items-center justify-between  gap-4 text-center ">
+      <div className="flex items-center justify-between gap-4 text-center">
         <div className="flex flex-col items-center">
-          <div className="text-6xl">{"🌙"}</div>
-          <p className="capitalize text-lg mt-1">{"Clear"}</p>
+          <img
+            src={weather.weather_icons[0]}
+            alt={weather.weather_descriptions[0]}
+            className="w-16 h-16"
+          />
+          <p className="capitalize text-lg mt-1">
+            {weather.weather_descriptions[0]}
+          </p>
         </div>
-        <div className="text-5xl font-light">{15}°c</div>
-
+        <div className="text-5xl font-light">{weather.temperature}°C</div>
         <div className="mt-4 sm:mt-0 text-sm sm:text-right">
-          <p>Wind: 18 kmph</p>
-          <p>Precip: 0.1 mm</p>
-          <p>Pressure: 1026 mb</p>
+          <p>Wind: {weather.wind_speed} kmph</p>
+          <p>Precip: {weather.precip} mm</p>
+          <p>Pressure: {weather.pressure} mb</p>
         </div>
       </div>
     </div>
