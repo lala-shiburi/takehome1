@@ -9,7 +9,10 @@ import {
 
 export const SkeletonWeatherCard = () => {
   return (
-    <div className="flex p-6 h-screen w-screen items-center justify-center">
+    <div
+      data-testid="skeleton-weather-card"
+      className="flex p-6 h-screen w-screen items-center justify-center"
+    >
       <Card className="w-full max-w-[500px] border-none">
         <CardHeader>
           <Skeleton className="h-10 w-full rounded-md" /> {/* SearchBar */}

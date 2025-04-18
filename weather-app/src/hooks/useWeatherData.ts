@@ -2,8 +2,11 @@ import { useMemo } from "react";
 import { useCurrentWeather } from "./useCurrentWeather";
 import { formatWeatherData, generateMockWeatherData } from "../lib/utils";
 
-export const useWeatherData = () => {
-  const { data, isLoading, isError, error } = useCurrentWeather("Pretoria");
+export const useWeatherData = (location: string, enabled: boolean) => {
+  const { data, isLoading, isError, error } = useCurrentWeather(
+    location,
+    enabled
+  );
 
   const { forecast, historical } = useMemo(() => generateMockWeatherData(), []);
 

@@ -15,40 +15,41 @@ import { SkeletonWeatherCard } from "./components/custom/SkeletonWeatherCard";
 import { useWeatherData } from "./hooks/useWeatherData";
 
 export const App = () => {
-  const { weather, isLoading, isError, error } = useWeatherData();
+  const [location, setLocation] = useState("Pretoria, Gauteng, South Africa");
+
+  const [displayKey, setDisplayKey] = useState(Date.now());
+  const { weather, isLoading, isError, error } = useWeatherData(
+    location,
+    !!location
+  );
 
   const today = weather ? weather[3] : null;
-  const [location, setLocation] = useState("Pretoria, Gauteng, South Africa");
-  const [currentWeather, setCurrentWeather] =
-    useState<FormattedWeatherDay | null>(today);
-  const [displayKey, setDisplayKey] = useState(Date.now());
-
   const forecastDays = useMemo(() => {
     if (weather) {
       return [...weather.slice(0, 3), ...weather.slice(4)];
     }
     return [];
   }, [weather]);
-
-  const handleSearch = (city: string) => {
-    setLocation(city);
+  const [currentWeather, setCurrentWeather] =
+    useState<FormattedWeatherDay | null>(today);
+  const handleSearch = (location: string) => {
+    setLocation(location);
   };
 
+  useEffect(() => {
+    if (weather) {
+      setCurrentWeather(weather[3]);
+    }
+  }, [weather]);
   const handleReset = () => {
     setLocation("Pretoria, Gauteng, South Africa");
-    handleDaySelect(today);
+    handleDaySelect(today!);
   };
 
   const handleDaySelect = (day: FormattedWeatherDay) => {
     setCurrentWeather(day);
     setDisplayKey(Date.now());
   };
-
-  useEffect(() => {
-    if (location !== "Pretoria, Gauteng, South Africa") {
-      setLocation("Pretoria, Gauteng, South Africa");
-    }
-  }, [location]);
 
   return isLoading ? (
     <SkeletonWeatherCard />
@@ -70,12 +71,12 @@ export const App = () => {
                 {location}
               </CardTitle>
             </CardHeader>
-            <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-              {/* Pass valid currentWeather */}
+            <CardContent>
               {currentWeather && (
                 <CurrentWeatherDisplay
                   weather={currentWeather}
-                  key={displayKey}
+                  key={displayKey.toString()}
+                  displayKey={displayKey.toString()}
                 />
               )}
             </CardContent>

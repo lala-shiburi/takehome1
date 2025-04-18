@@ -24,6 +24,7 @@ export const ForecastDaySelector = ({
         <button
           key={day.date}
           onClick={() => onSelectDay(day)}
+          data-testid={`forecast-day-${day.displayDay}`}
           className={`
               p-2 rounded-md transition-all duration-300 ease-in-out transform
               min-w-[60px] sm:min-w-0

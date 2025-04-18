@@ -4,10 +4,12 @@ import { FormattedWeatherDay } from "../../types/weather";
 type CurrentWeatherDisplayProps = {
   weather: FormattedWeatherDay;
   key?: string;
+  displayKey?: string;
 };
 
 export const CurrentWeatherDisplay = ({
   weather,
+
   key,
 }: CurrentWeatherDisplayProps) => {
   return (
@@ -23,14 +25,18 @@ export const CurrentWeatherDisplay = ({
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 text-center sm:text-left">
           {/* Weather Icon & Description */}
           <div className="flex flex-col items-center sm:items-start">
-            <motion.img
-              src={weather.weather_icons[0]}
-              alt={weather.weather_descriptions?.[0] || "Weather icon"}
+            <motion.div
               className="w-14 h-14 sm:w-16 sm:h-16"
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.1 }}
-            />
+            >
+              <img
+                src={weather.weather_icons[0]}
+                alt={weather.weather_descriptions?.[0] || "Weather icon"}
+                className="w-full h-full object-contain"
+              />
+            </motion.div>
             <p className="capitalize text-sm font-bold">
               {weather.weather_descriptions?.[0]}
             </p>

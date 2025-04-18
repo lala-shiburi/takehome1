@@ -14,26 +14,34 @@ interface WeatherResponse {
   location: {
     localtime: string;
   };
+  error?: {
+    code: number;
+    type: string;
+    info: string;
+  };
 }
 
 export const fetchCurrentWeather = async (
-  city: string
+  location: string
 ): Promise<WeatherResponse> => {
-  const response = await fetch(
-    `${BASE_URL}/current?access_key=${API_KEY}&query=${"Pretoria"}`
-  );
+  try {
+    const response = await fetch(
+      `${BASE_URL}/current?access_key=${API_KEY}&query=${location}`
+    );
 
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data: WeatherResponse = await response.json();
+
+    if (data.error) {
+      throw new Error(data.error.info || "Failed to fetch weather data");
+    }
+
+    return data;
+  } catch (err) {
+    console.error("Weather fetch error:", err);
+    throw err;
   }
-
-  const data: WeatherResponse = await response.json();
-
-  if (data.error) {
-    throw new Error(data.error.info || "Failed to fetch weather data");
-  }
-
-  return data;
 };
-
-export const fetchForecast = async (city: string): Promise<any> => {};
