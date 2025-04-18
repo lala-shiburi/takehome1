@@ -75,7 +75,6 @@ export const App = () => {
               {currentWeather && (
                 <CurrentWeatherDisplay
                   weather={currentWeather}
-                  key={displayKey.toString()}
                   displayKey={displayKey.toString()}
                 />
               )}

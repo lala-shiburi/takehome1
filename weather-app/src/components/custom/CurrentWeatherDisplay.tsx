@@ -3,19 +3,18 @@ import { FormattedWeatherDay } from "../../types/weather";
 
 type CurrentWeatherDisplayProps = {
   weather: FormattedWeatherDay;
-  key?: string;
   displayKey?: string;
 };
 
 export const CurrentWeatherDisplay = ({
   weather,
 
-  key,
+  displayKey,
 }: CurrentWeatherDisplayProps) => {
   return (
     <AnimatePresence mode="wait">
       <motion.div
-        key={key || weather.date}
+        key={displayKey || weather.date}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}

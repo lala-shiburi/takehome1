@@ -126,3 +126,12 @@ export const generateMockWeatherData = () => {
 
   return { forecast, historical };
 };
+
+export const getWeatherIconUrl = (
+  code: keyof typeof weatherCodes
+): string | undefined => {
+  const slug = weatherCodes[code]?.slug;
+  return slug
+    ? `https://raw.githubusercontent.com/Makin-Things/weather-icons/refs/heads/main/animated/${slug}.svg`
+    : undefined;
+};
