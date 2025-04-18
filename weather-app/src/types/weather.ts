@@ -31,16 +31,13 @@ export type HourlyWeather = {
 };
 
 export type WeatherDay = {
+  date: string;
   hourly: HourlyWeather[];
 };
 
 export type WeatherData = {
   location: { localtime: string };
   historical?: Record<string, WeatherDay>;
-  current: HourlyWeather & {
-    humidity: number;
-    feelslike: number;
-    observation_time: string;
-  };
+  current: HourlyWeather;
   forecast?: Record<string, WeatherDay>;
 };

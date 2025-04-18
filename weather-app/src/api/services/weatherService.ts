@@ -1,19 +1,18 @@
 const BASE_URL = import.meta.env.VITE_WEATHERSTACK_API_URL;
-// const API_KEY = import.meta.env.VITE_WEATHERSTACK_API_KEY;
+const API_KEY = import.meta.env.VITE_WEATHERSTACK_API_KEY;
 
 interface WeatherResponse {
   current: {
     temperature: number;
-    weather_descriptions: string[];
+    weather_code: number;
     weather_icons: string[];
+    weather_descriptions: string[];
+    wind_speed: number;
+    pressure: number;
+    precip: number;
   };
-  location?: {
-    name: string;
-    region: string;
-    country: string;
-  };
-  error?: {
-    info: string;
+  location: {
+    localtime: string;
   };
 }
 

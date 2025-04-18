@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CurrentWeatherDisplay } from "./components/custom/CurrentWeatherDisplay";
 import { ForecastDaySelector } from "./components/custom/ForecastDaySelector";
 import { SearchBar } from "./components/custom/SearchBar";
@@ -9,25 +9,26 @@ import {
   CardHeader,
   CardTitle,
 } from "./components/ui/card";
-import mock from "./api/mock.json";
-import { formatWeatherData } from "./lib/utils";
 import { FormattedWeatherDay } from "./types/weather";
-import { useCurrentWeather } from "./hooks/useCurrentWeather";
+
 import { SkeletonWeatherCard } from "./components/custom/SkeletonWeatherCard";
+import { useWeatherData } from "./hooks/useWeatherData";
 
 export const App = () => {
-  const formattedData = formatWeatherData(mock);
-  const today = formattedData[3];
-  const { data, isLoading, isError, error } = useCurrentWeather("pretoria");
+  const { weather, isLoading, isError, error } = useWeatherData();
+
+  const today = weather ? weather[3] : null;
   const [location, setLocation] = useState("Pretoria, Gauteng, South Africa");
   const [currentWeather, setCurrentWeather] =
-    useState<FormattedWeatherDay>(today);
+    useState<FormattedWeatherDay | null>(today);
   const [displayKey, setDisplayKey] = useState(Date.now());
 
-  const forecastDays = [
-    ...formattedData.slice(0, 3),
-    ...formattedData.slice(4),
-  ];
+  const forecastDays = useMemo(() => {
+    if (weather) {
+      return [...weather.slice(0, 3), ...weather.slice(4)];
+    }
+    return [];
+  }, [weather]);
 
   const handleSearch = (city: string) => {
     setLocation(city);
@@ -42,10 +43,13 @@ export const App = () => {
     setCurrentWeather(day);
     setDisplayKey(Date.now());
   };
+
   useEffect(() => {
-    setLocation("Pretoria, Gauteng, South Africa");
+    if (location !== "Pretoria, Gauteng, South Africa") {
+      setLocation("Pretoria, Gauteng, South Africa");
+    }
   }, [location]);
-  console.log(isLoading, isError, error);
+
   return isLoading ? (
     <SkeletonWeatherCard />
   ) : (
@@ -67,10 +71,13 @@ export const App = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-              <CurrentWeatherDisplay
-                weather={currentWeather}
-                key={displayKey}
-              />
+              {/* Pass valid currentWeather */}
+              {currentWeather && (
+                <CurrentWeatherDisplay
+                  weather={currentWeather}
+                  key={displayKey}
+                />
+              )}
             </CardContent>
             <CardFooter>
               <ForecastDaySelector
