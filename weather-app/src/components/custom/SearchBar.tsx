@@ -25,7 +25,7 @@ export const SearchBar = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex w-full max-w-[500px] items-center space-x-2"
+      className="flex w-full  items-center space-x-2"
     >
       <Input
         type="search"

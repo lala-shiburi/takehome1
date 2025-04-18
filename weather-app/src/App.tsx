@@ -42,11 +42,13 @@ export const App = () => {
   };
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center">
-      <Card>
+    <div className="flex p-6 h-screen w-screen items-center justify-center">
+      <Card className="w-full max-w-[500px] shadow-lg">
         <CardHeader>
           <SearchBar onReset={handleReset} onSearch={handleSearch} />
-          <CardTitle>{location}</CardTitle>
+          <CardTitle className="text-center text-sm font-bold pt-4">
+            {location}
+          </CardTitle>
         </CardHeader>
         <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
           <CurrentWeatherDisplay weather={currentWeather} key={displayKey} />
