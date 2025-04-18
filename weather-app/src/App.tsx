@@ -1,7 +1,7 @@
 import { CurrentWeatherDisplay } from "./components/custom/CurrentWeatherDisplay";
 import { ForecastDaySelector } from "./components/custom/ForecastDaySelector";
 import { SearchBar } from "./components/custom/SearchBar";
-import { CurrentWeather } from "./types/weather";
+
 import {
   Card,
   CardContent,
@@ -10,29 +10,17 @@ import {
   CardTitle,
 } from "./components/ui/card";
 import mock from "./api/mock.json";
+import { formatWeatherData } from "./lib/utils";
+import { useState } from "react";
 
 export const App = () => {
-  const { current } = mock;
-  const {
-    observation_time,
-    temperature,
-    weather_code,
-    weather_icons,
-    weather_descriptions,
-    wind_speed,
-    pressure,
-    precip,
-  } = current;
-  const CurrentWeather: CurrentWeather = {
-    observation_time,
-    temperature,
-    weather_code,
-    weather_icons,
-    weather_descriptions,
-    wind_speed,
-    pressure,
-    precip,
-  };
+  const data = formatWeatherData(mock);
+
+  const today = data[3];
+  const [CurrentWeather, setCurrentWeather] = useState(today);
+
+  const forecastDays = [...data.slice(0, 3), ...data.slice(4)];
+  console.log(forecastDays);
   return (
     <div>
       <Card>
@@ -45,7 +33,11 @@ export const App = () => {
           <CurrentWeatherDisplay weather={CurrentWeather} />
         </CardContent>
         <CardFooter>
-          <ForecastDaySelector />
+          <ForecastDaySelector
+            forecast={forecastDays}
+            onSelectDay={(day) => setCurrentWeather(day)}
+            selectedDay={CurrentWeather}
+          />
         </CardFooter>
       </Card>
     </div>

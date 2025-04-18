@@ -4,7 +4,6 @@ import { CurrentWeatherDisplay } from "./CurrentWeatherDisplay";
 import type { CurrentWeather } from "../../types/weather";
 
 const mockWeather: CurrentWeather = {
-  observation_time: "10:00 PM",
   temperature: 20,
   weather_code: 113,
   weather_icons: [

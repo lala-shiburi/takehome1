@@ -1,21 +1,9 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { WeatherData } from "../types/weather";
+import { FormattedWeatherDay, WeatherData } from "../types/weather";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-
-type FormattedWeatherDay = {
-  date: string;
-  temperature: number;
-  weather_code: number;
-  weather_icons: string[];
-  weather_descriptions: string[];
-  wind_speed: number;
-  pressure: number;
-  precip: number;
-  displayDay: string;
-};
 
 export const formatWeatherData = (
   weatherData: WeatherData

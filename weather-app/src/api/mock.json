@@ -60,7 +60,7 @@
       "hourly": [
         {
           "time": "0",
-          "temperature": 4,
+          "temperature": 45,
           "weather_code": 113,
           "weather_icons": [
             "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png"
@@ -77,7 +77,7 @@
       "hourly": [
         {
           "time": "0",
-          "temperature": 4,
+          "temperature": 13,
           "weather_code": 113,
           "weather_icons": [
             "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png"
@@ -94,7 +94,7 @@
       "hourly": [
         {
           "time": "0",
-          "temperature": 4,
+          "temperature": 41,
           "weather_code": 113,
           "weather_icons": [
             "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png"
@@ -113,7 +113,7 @@
       "hourly": [
         {
           "time": "0",
-          "temperature": 4,
+          "temperature": 34,
           "weather_code": 113,
           "weather_icons": [
             "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png"
@@ -130,7 +130,7 @@
       "hourly": [
         {
           "time": "0",
-          "temperature": 4,
+          "temperature": 24,
           "weather_code": 113,
           "weather_icons": [
             "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png"
@@ -147,15 +147,15 @@
       "hourly": [
         {
           "time": "0",
-          "temperature": 4,
+          "temperature": 214,
           "weather_code": 113,
           "weather_icons": [
             "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png"
           ],
           "weather_descriptions": ["Sunny"],
-          "wind_speed": 12,
+          "wind_speed": 112,
           "pressure": 1012,
-          "precip": 0.2
+          "precip": 0.23
         }
       ]
     }
