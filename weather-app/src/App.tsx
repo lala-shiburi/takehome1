@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { CurrentWeatherDisplay } from "./components/custom/CurrentWeatherDisplay";
 import { ForecastDaySelector } from "./components/custom/ForecastDaySelector";
 import { SearchBar } from "./components/custom/SearchBar";
-
 import {
   Card,
   CardContent,
@@ -11,32 +11,43 @@ import {
 } from "./components/ui/card";
 import mock from "./api/mock.json";
 import { formatWeatherData } from "./lib/utils";
-import { useState } from "react";
 
 export const App = () => {
-  const data = formatWeatherData(mock);
+  const formattedData = formatWeatherData(mock);
+  const today = formattedData[3];
 
-  const today = data[3];
-  const [CurrentWeather, setCurrentWeather] = useState(today);
+  const [location, setLocation] = useState("Pretoria, Gauteng, South Africa");
+  const [currentWeather, setCurrentWeather] = useState(today);
 
-  const forecastDays = [...data.slice(0, 3), ...data.slice(4)];
-  console.log(forecastDays);
+  const forecastDays = [
+    ...formattedData.slice(0, 3),
+    ...formattedData.slice(4),
+  ];
+
+  const handleSearch = (city: string) => {
+    setLocation(city);
+  };
+
+  const handleReset = () => {
+    setLocation("Pretoria, Gauteng, South Africa");
+    setCurrentWeather(today);
+  };
+
   return (
     <div>
       <Card>
-        {" "}
         <CardHeader>
-          <SearchBar />
-          <CardTitle>Pretoria,Gauteng,South Africa</CardTitle>
+          <SearchBar onReset={handleReset} onSearch={handleSearch} />
+          <CardTitle>{location}</CardTitle>
         </CardHeader>
         <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-          <CurrentWeatherDisplay weather={CurrentWeather} />
+          <CurrentWeatherDisplay weather={currentWeather} />
         </CardContent>
         <CardFooter>
           <ForecastDaySelector
             forecast={forecastDays}
-            onSelectDay={(day) => setCurrentWeather(day)}
-            selectedDay={CurrentWeather}
+            selectedDay={currentWeather}
+            onSelectDay={setCurrentWeather}
           />
         </CardFooter>
       </Card>
