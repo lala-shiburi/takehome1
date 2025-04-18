@@ -1,9 +1,11 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { CurrentWeatherDisplay } from "./CurrentWeatherDisplay";
-import type { CurrentWeather } from "../../types/weather";
+import type { FormattedWeatherDay } from "../../types/weather";
 
-const mockWeather: CurrentWeather = {
+const mockWeather: FormattedWeatherDay = {
+  date: "2025-04-18",
+  displayDay: "Today",
   temperature: 20,
   weather_code: 113,
   weather_icons: [
@@ -47,6 +49,4 @@ describe("CurrentWeatherDisplay", () => {
       screen.getByText(`Pressure: ${mockWeather.pressure} mb`)
     ).toBeInTheDocument();
   });
-
-  //TODO: Add more tests for missing weather information;
 });

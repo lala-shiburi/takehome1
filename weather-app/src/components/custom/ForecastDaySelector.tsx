@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { FormattedWeatherDay } from "../../types/weather";
 
 export const ForecastDaySelector = ({
@@ -19,11 +20,13 @@ export const ForecastDaySelector = ({
 
   return (
     <div className="mt-6">
-      <div className="grid grid-cols-6  gap-4 text-center">
+      <div className="grid grid-cols-6 gap-4 text-center">
         {forecast.map((day) => (
-          <button
+          <motion.button
             key={day.date}
             onClick={() => onSelectDay(day)}
+            whileHover={{ scale: 1.08 }}
+            transition={{ type: "spring", stiffness: 300 }}
             className={`p-2 rounded-md transition-all ${
               selectedDay?.date === day.date
                 ? "bg-blue-100 border-2 border-blue-500"
@@ -31,16 +34,16 @@ export const ForecastDaySelector = ({
             } focus:outline-none focus:ring-2 focus:ring-blue-500`}
             aria-label={`Weather forecast for ${day.displayDay}`}
           >
-            <div className="text-sm font-semibold ">{day.displayDay}</div>
-            <div className="flex justify-center items-center ">
+            <div className="text-sm font-semibold">{day.displayDay}</div>
+            <div className="flex justify-center items-center">
               <img
                 src={day.weather_icons[0]}
                 className="w-6 h-6"
                 alt={day.weather_descriptions?.[0] || "Weather icon"}
               />
             </div>
-            <div className="text-sm ">{day.temperature}°C</div>
-          </button>
+            <div className="text-sm">{day.temperature}°C</div>
+          </motion.button>
         ))}
       </div>
     </div>
